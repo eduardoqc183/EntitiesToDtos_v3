@@ -13,10 +13,10 @@ namespace generatedtos
 {
     class Program
     {
-        public const string dbName = "DB_A5530E_netinvoice";
-        public const string serverName = "sql5026.site4now.net";
-        public const string userid = "DB_A5530E_netinvoice_admin";
-        public const string psswrd = "1tb4zqya_45810953";
+        public const string dbName = "NOMBRE_BASE_DATOS";
+        public const string serverName = "NOMBRE_SERVIDOR";
+        public const string userid = "USUARIO";
+        public const string psswrd = "PASSWORD";
         public const string outputfiles = @"C:\Users\eduar\Desktop\dtos\";
 
         static void Main(string[] args)
