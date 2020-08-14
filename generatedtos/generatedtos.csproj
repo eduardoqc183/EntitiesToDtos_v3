@@ -49,9 +49,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addons.cs" />
+    <Compile Include="Conector\ConectorBase.cs" />
+    <Compile Include="Conector\MysqlConnector.cs" />
+    <Compile Include="Conector\SqlSrvConnector.cs" />
+    <Compile Include="Interface\ITablaInfo.cs" />
+    <Compile Include="Modelo\JobInfo.cs" />
+    <Compile Include="Modelo\TablaInfoSqlSrv.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TablaInfo.cs" />
+    <Compile Include="Modelo\TablaInfoMysql.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

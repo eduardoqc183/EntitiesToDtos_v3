@@ -15,7 +15,8 @@ namespace generatedtos
         Bool,
         ByteArray,
         Unknow,
-        SmallInt
+        SmallInt,
+        Guid
     }
 
     public static class Addons
@@ -37,7 +38,9 @@ namespace generatedtos
                 case DataType.Bool:
                     return "bool";
                 case DataType.ByteArray:
-                    return "byte[]";                
+                    return "byte[]";
+                case DataType.Guid:
+                    return "Guid";
                 default:
                     return "??";
             }
