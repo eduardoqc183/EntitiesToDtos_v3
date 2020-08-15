@@ -13,11 +13,11 @@ namespace generatedtos
 {
     class Program
     {
-        public const string dbName = "NOMBRE_BASE_DATOS";
-        public const string serverName = "NOMBRE_SERVIDOR";
-        public const string userid = "USUARIO";
-        public const string psswrd = "PASSWORD";
-        public const string outputfiles = @"C:\Users\eduar\Desktop\dtos\";
+        public const string dbName = "tisolsoportebd";
+        public const string serverName = "localhost";
+        public const string userid = "postgres";
+        public const string psswrd = "123456";
+        public const string outputfiles = @"C:\Users\eduar\source\repos\TISolucionesSoporte\TISolucionesSoporteEntities\Dtos\";
 
         static void Main(string[] args)
         {
@@ -33,7 +33,7 @@ namespace generatedtos
                 };
 
                 Console.WriteLine($"Obteniendo datos de {serverName}...");
-                var dbConnector = new SqlSrvConnector(job);
+                var dbConnector = new PgSqlConnector(job);
 
                 var tablas = dbConnector.ObtenerTablas();
 
@@ -46,9 +46,9 @@ namespace generatedtos
                     str.AppendLine("using Dapper.Contrib.Extensions;");
                     str.AppendLine("using System;");
                     str.AppendLine("using System.ComponentModel.DataAnnotations;");
-                    str.AppendLine("using NetInvoice.BussinesEntities.Atributos;");
+                    //str.AppendLine("using NetInvoice.BussinesEntities.Atributos;");
                     str.AppendLine("");
-                    str.AppendLine("namespace NetInvoice.BussinesEntities.Dto");
+                    str.AppendLine("namespace TISolucionesSoporteEntities");
                     str.AppendLine("{");
                     str.AppendLine("    [Table(\"" + tabla + "\")]");
                     str.AppendLine($"    public partial class {tabla}Dto");

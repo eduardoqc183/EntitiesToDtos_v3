@@ -31,7 +31,7 @@ namespace generatedtos.Modelo
                     case 52: return DataType.Decimal;
                     case 165: return DataType.ByteArray;
                     case 40: return DataType.Datetime;
-                    default: return DataType.String;
+                    default: return DataType.Unknow;
                 }
             }
         }
