@@ -11,6 +11,7 @@ namespace generatedtos.Modelo
         public int Precision { get; set; }
         public int IsNullable { get; set; }
         public int IsIdentity { get; set; }
+        public string Description { get; set; }
 
         public DataType TipoDato
         {
@@ -44,6 +45,14 @@ namespace generatedtos.Modelo
         public string GetPropertyDeclaration()
         {
             var sb = new StringBuilder();
+
+            if (!string.IsNullOrWhiteSpace(Description))
+            {
+                sb.AppendLine("         /// <summary>");
+                sb.AppendLine($"         /// {Description}");
+                sb.AppendLine("         /// </summary>");
+            }
+
             if (EsPrimaryKey)
             {
                 sb.AppendLine("         [Dapper.Contrib.Extensions.Key]");

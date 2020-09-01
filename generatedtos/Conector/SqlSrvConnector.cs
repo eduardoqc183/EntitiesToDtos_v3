@@ -46,13 +46,25 @@ namespace generatedtos.Conector
                     if (cnx.State != System.Data.ConnectionState.Open) cnx.Open();
 
                     var q = @"SELECT 
-                            name as Field,
-                            system_type_id as TypeId,
-                            max_length as MaxLenth,
-                            precision as Precision,
-                            is_nullable as IsNullable,
-                            is_identity as IsIdentity " +
-                            $"FROM sys.columns WHERE object_id = OBJECT_ID('dbo.{nombreTabla}') ";
+                                    sc.name as Field,
+                                    sc.system_type_id as TypeId,
+                                    sc.max_length as MaxLenth,
+                                    sc.precision as Precision,
+                                    sc.is_nullable as IsNullable,
+                                    sc.is_identity as IsIdentity ,
+                                    [Description] = s.value
+                                    FROM sys.columns sc
+                                    JOIN INFORMATION_SCHEMA.COLUMNS i_s 
+                                    ON 
+                                      sc.object_id = OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME) 
+                                      AND i_s.COLUMN_NAME = sc.name
+                                    LEFT JOIN 
+                                      sys.extended_properties s 
+                                    ON 
+                                      s.major_id = OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME) 
+                                      AND s.minor_id = i_s.ORDINAL_POSITION 
+                                      AND s.name = 'MS_Description' " +
+                                    $"WHERE sc.object_id = OBJECT_ID('dbo.{nombreTabla}') ";
                     var data = cnx.Query<TablaInfoSqlSrv>(q);
                     return data.Select(s => (ITablaInfo)s);
                 }

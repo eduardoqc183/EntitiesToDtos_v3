@@ -50,6 +50,7 @@ namespace generatedtos.Modelo
         public string GetPropertyDeclaration()
         {
             var sb = new StringBuilder();
+
             if (EsPrimaryKey)
             {
                 if (TipoDato == generatedtos.DataType.Int)
