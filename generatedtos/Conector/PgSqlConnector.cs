@@ -44,20 +44,23 @@ namespace generatedtos.Conector
                 using (var cnx = new NpgsqlConnection(_conectionString))
                 {
                     if (cnx.State != System.Data.ConnectionState.Open) cnx.Open();
-                    var q = "select  distinct " +
-                            "c.table_name as \"TableName\",  " +
+                    var q = "select  distinct c.table_name as \"TableName\", " +
                             "c.column_name as \"Field\",  " +
                             "c.is_nullable as \"IsNUllable\",  " +
-                            "c.is_identity as \"IsIdentity\",  " +
-                            "c.udt_name as \"DataType\", " +
-                            "c.ordinal_position, " + 
-                            "c.character_maximum_length as \"MaxLength\",  " +
-                            "tc.constraint_type as \"ConstraintType\" " +
-                            "from information_schema.columns c " +
-                            "left join information_schema.key_column_usage cu on c.table_name = cu.table_name and c.column_name = cu.column_name " +
-                            "left join information_schema.table_constraints tc on cu.constraint_name = tc.constraint_name and cu.table_name = tc.table_name and tc.constraint_type = 'PRIMARY KEY' " +
-                            $"where c.table_name = '{nombreTabla}' " +
-                            "order by c.ordinal_position asc; ";
+                            "c.is_identity as \"IsIdentity\", " +
+                            "c.udt_name as \"DataType\",  " +
+                            "c.ordinal_position,  " +
+                            "c.character_maximum_length as \"MaxLength\",   " +
+                            "tc.constraint_type as \"ConstraintType\", " +
+                            "pgd.description as \"Description\" " +
+                            "from information_schema.columns c  " +
+                            "left join information_schema.key_column_usage cu on c.table_name = cu.table_name and c.column_name = cu.column_name  " +
+                            "left join information_schema.table_constraints tc on cu.constraint_name = tc.constraint_name and  " +
+                            "cu.table_name = tc.table_name and tc.constraint_type = 'PRIMARY KEY'  " +
+                            "join pg_catalog.pg_statio_all_tables st on c.table_name = st.relname " +
+                            "left join pg_catalog.pg_description pgd on st.relid = pgd.objoid and pgd.objsubid=c.ordinal_position and c.table_schema=st.schemaname and c.table_name=st.relname " +
+                            $"where c.table_name = '{nombreTabla}'" +
+                            "order by c.ordinal_position asc;";
 
                     var data = cnx.Query<TablaInfoPgsql>(q);
                     return data.Select(s => (ITablaInfo)s);

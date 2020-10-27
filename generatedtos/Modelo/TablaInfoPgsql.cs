@@ -15,6 +15,7 @@ namespace generatedtos.Modelo
         public string IsIdentity { get; set; }
         public string DataType { get; set; }
         public int MaxLength { get; set; }
+        public string Description { get; set; }
         public string ConstraintType { get; set; }
 
         public DataType TipoDato
@@ -50,6 +51,13 @@ namespace generatedtos.Modelo
         public string GetPropertyDeclaration()
         {
             var sb = new StringBuilder();
+
+            if (!string.IsNullOrWhiteSpace(Description))
+            {
+                sb.AppendLine("         /// <summary>");
+                sb.AppendLine($"         /// {Description}");
+                sb.AppendLine("         /// </summary>");
+            }
 
             if (EsPrimaryKey)
             {
