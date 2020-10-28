@@ -25,7 +25,8 @@ namespace generatedtos.Conector
                     Host = jobInfo.ServerName,
                     Database = jobInfo.DBName,
                     Username = jobInfo.UserId,
-                    Password = jobInfo.Password
+                    Password = jobInfo.Password,
+                    Port = jobInfo.Port
                 };
 
                 _conectionString = cnnString.ConnectionString;

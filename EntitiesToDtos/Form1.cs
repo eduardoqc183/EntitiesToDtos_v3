@@ -1,44 +1,85 @@
-﻿using Dapper;
-using generatedtos.Conector;
-using generatedtos.Modelo;
-using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using EntitiesToDtos.Properties;
+using generatedtos.Conector;
+using generatedtos.Modelo;
 
-namespace generatedtos
+namespace EntitiesToDtos
 {
-    class Program
+    public partial class Form1 : Form
     {
-        public const string DbName = "empresa";
-        public const string ServerName = "localhost";
-        public const string Userid = "postgres";
-        public const string Psswrd = "123456";
-        public const int Port = 5434;
-        public const string NamespaceDTOs = "EF_Postgres.Entities";
-        public const string NamespaceEntities = "EF_Postgres.DataModel.Models";
-        public const string OutputDTOfiles = @"C:\Users\eduar\source\repos\EF_Postgres\EF_Postgres.Entities\DTOs\";
-        public const string OutputAssemblersfiles = @"C:\Users\eduar\source\repos\EF_Postgres\EF_Postgres.DataModel\Assemblers\";
-        public const bool GenerarAssemblers = true;
+        public Form1()
+        {
+            InitializeComponent();
+        }
 
-        static void Main(string[] args)
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            txtBaseDatos.Text = Settings.Default.bd;
+            cboTipo.SelectedIndex = Settings.Default.indextipo;
+            txtNamespaceDtos.Text = Settings.Default.namespacedto;
+            txtNamespacesEntities.Text = Settings.Default.namespaceentities;
+            txtOutputAssemblers.Text = Settings.Default.outputassembers;
+            txtOutputDtos.Text = Settings.Default.outputdto;
+            txtPassword.Text = Settings.Default.password;
+            txtPuerto.Text = Settings.Default.port;
+            txtServer.Text = Settings.Default.server;
+            txtUserID.Text = Settings.Default.userid;
+            checkBox1.Checked = Settings.Default.generarassemblers;
+        }
+
+        private void cboTipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtPuerto.Enabled = cboTipo.SelectedIndex == 1;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            groupBox3.Enabled = checkBox1.Checked;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
             try
             {
                 JobInfo job = new JobInfo
                 {
-                    DBName = DbName,
-                    Password = Psswrd,
-                    ServerName = ServerName,
-                    UserId = Userid,
-                    Port = Port
+                    DBName = txtBaseDatos.Text,
+                    Password = txtPassword.Text,
+                    ServerName = txtServer.Text,
+                    UserId = txtUserID.Text,
+                    Port = txtPuerto.Enabled ? int.Parse(txtPuerto.Text) : 0
                 };
 
-                Console.WriteLine($"Obteniendo datos de {ServerName}...");
-                var dbConnector = new PgSqlConnector(job); //aca cambiar segun el motor de bd
+                Console.WriteLine($"Obteniendo datos de {job.ServerName}...");
+                ConectorBase dbConnector;
+
+                switch (cboTipo.SelectedIndex)
+                {
+                    case 0:
+                        dbConnector = new SqlSrvConnector(job);
+                        break;
+
+                    case 1:
+                        dbConnector = new PgSqlConnector(job);
+                        break;
+
+                    case 2:
+                        dbConnector = new MysqlConnector(job);
+                        break;
+
+                    default:
+                        dbConnector = new SqlSrvConnector(job);
+                        break;
+                }
 
                 var tablas = dbConnector.ObtenerTablas();
 
@@ -52,7 +93,7 @@ namespace generatedtos
                     str.AppendLine("using System;");
                     str.AppendLine("using System.ComponentModel.DataAnnotations;");
                     str.AppendLine("");
-                    str.AppendLine($"namespace {NamespaceDTOs}");
+                    str.AppendLine($"namespace {txtNamespaceDtos.Text}");
                     str.AppendLine("{");
                     //str.AppendLine("    [Table(\"" + tabla + "\")]");
                     str.AppendLine($"    public partial class {tabla}Dto");
@@ -63,10 +104,10 @@ namespace generatedtos
                     }
                     str.AppendLine("    }");
                     str.AppendLine("}");
-                    File.WriteAllText($"{OutputDTOfiles}{tabla}Dto.cs", str.ToString());
+                    File.WriteAllText($"{txtOutputDtos.Text}\\{tabla}Dto.cs", str.ToString());
                 }
 
-                if (GenerarAssemblers)
+                if (checkBox1.Checked)
                 {
                     foreach (var tabla in tablas)
                     {
@@ -76,9 +117,9 @@ namespace generatedtos
                         var str = new StringBuilder();
                         str.AppendLine("using System.Collections.Generic;");
                         str.AppendLine("using System.Linq;");
-                        str.AppendLine($"using {NamespaceEntities};");
+                        str.AppendLine($"using {txtNamespacesEntities.Text};");
                         str.AppendLine("");
-                        str.AppendLine($"namespace {NamespaceDTOs}");
+                        str.AppendLine($"namespace {txtNamespaceDtos.Text}");
                         str.AppendLine("{");
                         str.AppendLine($"    public static partial class {tabla}Assembler");
                         str.AppendLine("    {");
@@ -119,14 +160,28 @@ namespace generatedtos
                         str.AppendLine("        }");
                         str.AppendLine("    }");
                         str.AppendLine("}");
-                        File.WriteAllText($"{OutputAssemblersfiles}{tabla}Assembler.cs", str.ToString());
+                        File.WriteAllText($"{txtOutputAssemblers.Text}\\{tabla}Assembler.cs", str.ToString());
                     }
                 }
+
+                Settings.Default.bd = txtBaseDatos.Text;
+                Settings.Default.indextipo = cboTipo.SelectedIndex;
+                Settings.Default.namespacedto = txtNamespaceDtos.Text;
+                Settings.Default.namespaceentities = txtNamespacesEntities.Text;
+                Settings.Default.outputassembers = txtOutputAssemblers.Text;
+                Settings.Default.outputdto = txtOutputDtos.Text;
+                Settings.Default.password = txtPassword.Text;
+                Settings.Default.port = job.Port.ToString();
+                Settings.Default.server = txtServer.Text;
+                Settings.Default.userid = txtUserID.Text;
+                Settings.Default.generarassemblers = checkBox1.Checked;
+                Settings.Default.Save();
+
+                MessageBox.Show("Proceso Terminado");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex.Message);
-                Console.ReadKey();
+                MessageBox.Show(ex.Message);
             }
         }
     }

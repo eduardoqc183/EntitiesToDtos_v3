@@ -33,6 +33,8 @@ namespace generatedtos.Modelo
                     case "int4":
                     case "int2":
                         return generatedtos.DataType.Int;
+                    case "int8":
+                        return generatedtos.DataType.Long;
                     case "numeric": return generatedtos.DataType.Decimal;                       
                     case "bytea":
                         return generatedtos.DataType.ByteArray;
@@ -59,13 +61,13 @@ namespace generatedtos.Modelo
                 sb.AppendLine("         /// </summary>");
             }
 
-            if (EsPrimaryKey)
-            {
-                if (TipoDato == generatedtos.DataType.Int)
-                    sb.AppendLine("         [Dapper.Contrib.Extensions.Key]");
-                else
-                    sb.AppendLine("         [Dapper.Contrib.Extensions.ExplicitKey]");
-            }
+            //if (EsPrimaryKey)
+            //{
+            //    if (TipoDato == generatedtos.DataType.Int)
+            //        sb.AppendLine("         [Dapper.Contrib.Extensions.Key]");
+            //    else
+            //        sb.AppendLine("         [Dapper.Contrib.Extensions.ExplicitKey]");
+            //}
 
             if (Required && !EsPrimaryKey)
             {

@@ -28,7 +28,8 @@ namespace generatedtos.Modelo
                     case 239:
                     case 175:
                         return DataType.String;
-                    case 108: return DataType.Decimal;
+                    case 108:
+                    case 106:
                     case 52: return DataType.Decimal;
                     case 165: return DataType.ByteArray;
                     case 40: return DataType.Datetime;

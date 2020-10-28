@@ -12,6 +12,6 @@ namespace generatedtos.Modelo
         public string ServerName { get; set; }
         public string UserId { get; set; }
         public string Password { get; set; }
-        public string OutPutFiles { get; set; }
+        public int Port { get; set; }
     }
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "generatedtos", "generatedtos\generatedtos.csproj", "{A2AC5C0C-37D4-4CBF-910B-A43555F37F90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitiesToDtos", "EntitiesToDtos\EntitiesToDtos.csproj", "{17C8520B-14BE-4452-9993-6C59C60D2269}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A2AC5C0C-37D4-4CBF-910B-A43555F37F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2AC5C0C-37D4-4CBF-910B-A43555F37F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2AC5C0C-37D4-4CBF-910B-A43555F37F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17C8520B-14BE-4452-9993-6C59C60D2269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17C8520B-14BE-4452-9993-6C59C60D2269}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17C8520B-14BE-4452-9993-6C59C60D2269}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17C8520B-14BE-4452-9993-6C59C60D2269}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

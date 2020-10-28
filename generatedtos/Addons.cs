@@ -10,6 +10,7 @@ namespace generatedtos
     {
         String,
         Int,
+        Long,
         Decimal,
         Datetime,
         Bool,
@@ -41,6 +42,8 @@ namespace generatedtos
                     return "byte[]";
                 case DataType.Guid:
                     return "Guid";
+                case DataType.Long:
+                    return "long";
                 default:
                     return "??";
             }
