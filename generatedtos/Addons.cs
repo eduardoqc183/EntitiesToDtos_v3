@@ -17,7 +17,8 @@ namespace generatedtos
         ByteArray,
         Unknow,
         SmallInt,
-        Guid
+        Guid,
+        Short
     }
 
     public static class Addons
@@ -44,6 +45,8 @@ namespace generatedtos
                     return "Guid";
                 case DataType.Long:
                     return "long";
+                case DataType.Short:
+                    return "short";
                 default:
                     return "??";
             }

@@ -31,8 +31,9 @@ namespace generatedtos.Modelo
                     case "timestamp":
                         return generatedtos.DataType.Datetime;
                     case "int4":
-                    case "int2":
                         return generatedtos.DataType.Int;
+                    case "int2":
+                        return generatedtos.DataType.Short;
                     case "int8":
                         return generatedtos.DataType.Long;
                     case "numeric": return generatedtos.DataType.Decimal;                       
@@ -81,7 +82,7 @@ namespace generatedtos.Modelo
 
             if (Field.ToLower().Contains("mail"))
             {
-                sb.AppendLine("         [EsEmail]");
+                //sb.AppendLine("         [EsEmail]");
                 sb.AppendLine("         [EmailAddress]");
             }
 

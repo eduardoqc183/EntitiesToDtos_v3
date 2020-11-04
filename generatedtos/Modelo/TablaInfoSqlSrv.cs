@@ -54,10 +54,10 @@ namespace generatedtos.Modelo
                 sb.AppendLine("         /// </summary>");
             }
 
-            if (EsPrimaryKey)
-            {
-                sb.AppendLine("         [Dapper.Contrib.Extensions.Key]");
-            }
+            //if (EsPrimaryKey)
+            //{
+            //    sb.AppendLine("         [Dapper.Contrib.Extensions.Key]");
+            //}
 
             if (Required && !EsPrimaryKey)
             {

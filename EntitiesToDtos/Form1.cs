@@ -158,6 +158,12 @@ namespace EntitiesToDtos
                         str.AppendLine("            if (dtos == null) return null;");
                         str.AppendLine("            return dtos.Select(e => e.ToEntity()).ToList();");
                         str.AppendLine("        }");
+                        str.AppendLine("");
+                        str.AppendLine($"        public static List<{tabla}Dto> ToDTOs(this IEnumerable<{tabla}> entities)");
+                        str.AppendLine("        {");
+                        str.AppendLine("            if (entities == null) return null;");
+                        str.AppendLine("            return entities.Select(e => e.ToDTO()).ToList();");
+                        str.AppendLine("        }");
                         str.AppendLine("    }");
                         str.AppendLine("}");
                         File.WriteAllText($"{txtOutputAssemblers.Text}\\{tabla}Assembler.cs", str.ToString());
