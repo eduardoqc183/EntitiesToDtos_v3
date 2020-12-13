@@ -29,6 +29,7 @@ namespace generatedtos.Modelo
                         return generatedtos.DataType.String;
 
                     case "timestamp":
+                    case "timestamptz":
                         return generatedtos.DataType.Datetime;
                     case "int4":
                         return generatedtos.DataType.Int;

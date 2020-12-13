@@ -81,7 +81,7 @@ namespace generatedtos.Conector
                 using (var cnx = new NpgsqlConnection(_conectionString))
                 {
                     if (cnx.State != System.Data.ConnectionState.Open) cnx.Open();
-                    var qtablas = $"SELECT table_name FROM information_schema.tables WHERE table_schema='public'";
+                    var qtablas = $"SELECT table_name FROM information_schema.tables WHERE is_insertable_into = 'YES' and table_schema <> 'pg_catalog' and table_schema <> 'information_schema'";
 
                     return cnx.Query<string>(qtablas); ;
                 }
