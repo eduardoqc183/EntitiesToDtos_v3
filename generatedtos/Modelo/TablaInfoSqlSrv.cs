@@ -33,6 +33,7 @@ namespace generatedtos.Modelo
                     case 52: return DataType.Decimal;
                     case 165: return DataType.ByteArray;
                     case 40: return DataType.Datetime;
+                    case 127: return DataType.Long;
                     default: return DataType.Unknow;
                 }
             }
@@ -71,13 +72,13 @@ namespace generatedtos.Modelo
 
             if (Field.ToLower().Contains("mail"))
             {
-                sb.AppendLine("         [EsEmail]");
+                //sb.AppendLine("         [EsEmail]");
                 sb.AppendLine("         [EmailAddress]");
             }
 
             if (Field.ToLower().Contains("password"))
             {
-                sb.AppendLine("         [DataType(DataType.Password)]");
+                //sb.AppendLine("         [DataType(DataType.Password)]");
             }
 
             if (Field.ToLower().Contains("ruc"))

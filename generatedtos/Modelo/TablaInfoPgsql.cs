@@ -29,6 +29,7 @@ namespace generatedtos.Modelo
                         return generatedtos.DataType.String;
 
                     case "timestamp":
+                    case "date":
                     case "timestamptz":
                         return generatedtos.DataType.Datetime;
                     case "int4":
@@ -102,7 +103,7 @@ namespace generatedtos.Modelo
                 sb.AppendLine("         [DataType(DataType.Date)]");
             }
 
-            if (TipoDato == generatedtos.DataType.Int && !EsPrimaryKey)
+            if (TipoDato == generatedtos.DataType.Int && !EsPrimaryKey && !Field.ToLower().Contains("id"))
             {
                 sb.AppendLine("         [Range(0, int.MaxValue)]");
             }

@@ -64,7 +64,7 @@ namespace generatedtos.Conector
                                       s.major_id = OBJECT_ID(i_s.TABLE_SCHEMA+'.'+i_s.TABLE_NAME) 
                                       AND s.minor_id = i_s.ORDINAL_POSITION 
                                       AND s.name = 'MS_Description' " +
-                                    $"WHERE sc.object_id = OBJECT_ID('dbo.{nombreTabla}') ";
+                                    $"WHERE sc.object_id = OBJECT_ID('{nombreTabla}') ";
                     var data = cnx.Query<TablaInfoSqlSrv>(q);
                     return data.Select(s => (ITablaInfo)s);
                 }
@@ -83,7 +83,7 @@ namespace generatedtos.Conector
                 using (var cnx = new SqlConnection(_conectionString))
                 {
                     if (cnx.State != System.Data.ConnectionState.Open) cnx.Open();
-                    var qtablas = $"SELECT name FROM SYSOBJECTS WHERE xtype = 'U'; ";
+                    var qtablas = $"SELECT schema_name(schema_id) + '.' + name FROM sys.tables";
 
                     return cnx.Query<string>(qtablas); ;
                 }

@@ -87,7 +87,7 @@ namespace EntitiesToDtos
                 {
                     Console.WriteLine($"Generando DTOs de: {tabla}...");
                     var columnas = dbConnector.ColumasDeTabla(tabla);
-
+                    var tname = tabla.Contains(".") ? tabla.Substring(tabla.IndexOf(".") + 1, tabla.Length - (tabla.IndexOf(".") + 1)) : tabla;
                     var str = new StringBuilder();
                     //str.AppendLine("using Dapper.Contrib.Extensions;");
                     str.AppendLine("using System;");
@@ -96,7 +96,7 @@ namespace EntitiesToDtos
                     str.AppendLine($"namespace {txtNamespaceDtos.Text}");
                     str.AppendLine("{");
                     //str.AppendLine("    [Table(\"" + tabla + "\")]");
-                    str.AppendLine($"    public partial class {tabla}Dto");
+                    str.AppendLine($"    public partial class {tname}Dto");
                     str.AppendLine("    {");
                     foreach (var col in columnas)
                     {
@@ -104,7 +104,8 @@ namespace EntitiesToDtos
                     }
                     str.AppendLine("    }");
                     str.AppendLine("}");
-                    File.WriteAllText($"{txtOutputDtos.Text}\\{tabla}Dto.cs", str.ToString());
+
+                    File.WriteAllText($"{txtOutputDtos.Text}\\{tname}Dto.cs", str.ToString());
                 }
 
                 if (checkBox1.Checked)
@@ -113,7 +114,7 @@ namespace EntitiesToDtos
                     {
                         Console.WriteLine($"Generando Assemblers de: {tabla}...");
                         var columnas = dbConnector.ColumasDeTabla(tabla);
-
+                        var tname = tabla.Contains(".") ? tabla.Substring(tabla.IndexOf(".") + 1, tabla.Length - (tabla.IndexOf(".") + 1)) : tabla;
                         var str = new StringBuilder();
                         str.AppendLine("using System.Collections.Generic;");
                         str.AppendLine("using System.Linq;");
@@ -121,14 +122,14 @@ namespace EntitiesToDtos
                         str.AppendLine("");
                         str.AppendLine($"namespace {txtNamespaceDtos.Text}");
                         str.AppendLine("{");
-                        str.AppendLine($"    public static partial class {tabla}Assembler");
+                        str.AppendLine($"    public static partial class {tname}Assembler");
                         str.AppendLine("    {");
-                        str.AppendLine($"        static partial void OnDTO(this {tabla} entity, {tabla}Dto dto);");
-                        str.AppendLine($"        static partial void OnEntity(this {tabla}Dto entity, {tabla} dto);");
-                        str.AppendLine($"        public static {tabla} ToEntity(this {tabla}Dto dto)");
+                        str.AppendLine($"        static partial void OnDTO(this {tname} entity, {tname}Dto dto);");
+                        str.AppendLine($"        static partial void OnEntity(this {tname}Dto entity, {tname} dto);");
+                        str.AppendLine($"        public static {tname} ToEntity(this {tname}Dto dto)");
                         str.AppendLine("        {");
                         str.AppendLine("            if (dto == null) return null;");
-                        str.AppendLine($"            var entity = new {tabla}");
+                        str.AppendLine($"            var entity = new {tname}");
                         str.AppendLine("            {");
                         foreach (var col in columnas)
                         {
@@ -139,7 +140,7 @@ namespace EntitiesToDtos
                         str.AppendLine("            return entity;");
                         str.AppendLine("        }");
                         str.AppendLine("");
-                        str.AppendLine($"        public static {tabla}Dto ToDTO(this {tabla} entity)");
+                        str.AppendLine($"        public static {tname}Dto ToDTO(this {tname} entity)");
                         str.AppendLine("        {");
                         str.AppendLine("            if (entity == null) return null;");
                         str.AppendLine($"            var dto = new {tabla}Dto");
@@ -153,20 +154,21 @@ namespace EntitiesToDtos
                         str.AppendLine("            return dto;");
                         str.AppendLine("        }");
                         str.AppendLine("");
-                        str.AppendLine($"        public static List<{tabla}> ToEntities(this IEnumerable<{tabla}Dto> dtos)");
+                        str.AppendLine($"        public static List<{tname}> ToEntities(this IEnumerable<{tname}Dto> dtos)");
                         str.AppendLine("        {");
                         str.AppendLine("            if (dtos == null) return null;");
                         str.AppendLine("            return dtos.Select(e => e.ToEntity()).ToList();");
                         str.AppendLine("        }");
                         str.AppendLine("");
-                        str.AppendLine($"        public static List<{tabla}Dto> ToDTOs(this IEnumerable<{tabla}> entities)");
+                        str.AppendLine($"        public static List<{tname}Dto> ToDTOs(this IEnumerable<{tname}> entities)");
                         str.AppendLine("        {");
                         str.AppendLine("            if (entities == null) return null;");
                         str.AppendLine("            return entities.Select(e => e.ToDTO()).ToList();");
                         str.AppendLine("        }");
                         str.AppendLine("    }");
                         str.AppendLine("}");
-                        File.WriteAllText($"{txtOutputAssemblers.Text}\\{tabla}Assembler.cs", str.ToString());
+
+                        File.WriteAllText($"{txtOutputAssemblers.Text}\\{tname}Assembler.cs", str.ToString());
                     }
                 }
 
