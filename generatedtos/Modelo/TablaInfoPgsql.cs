@@ -93,10 +93,10 @@ namespace generatedtos.Modelo
                 sb.AppendLine("         [DataType(DataType.Password)]");
             }
 
-            if (Field.ToLower().Contains("ruc"))
-            {
-                sb.AppendLine("         [EsRUC]");
-            }
+            //if (Field.ToLower().Contains("ruc"))
+            //{
+            //    sb.AppendLine("         [EsRUC]");
+            //}
 
             if (TipoDato == generatedtos.DataType.Datetime)
             {
