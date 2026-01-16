@@ -64,27 +64,18 @@ namespace generatedtos.Modelo
                 sb.AppendLine("         /// </summary>");
             }
 
-            //if (EsPrimaryKey)
-            //{
-            //    if (TipoDato == generatedtos.DataType.Int)
-            //        sb.AppendLine("         [Dapper.Contrib.Extensions.Key]");
-            //    else
-            //        sb.AppendLine("         [Dapper.Contrib.Extensions.ExplicitKey]");
-            //}
-
             if (Required && !EsPrimaryKey)
             {
                 sb.AppendLine("         [Required(ErrorMessage = \"Campo requerido\", AllowEmptyStrings = false)]");
             }
 
-            if (TipoDato == generatedtos.DataType.String)
+            if (TipoDato == generatedtos.DataType.String && MaxLength > 0)
             {
                 sb.AppendLine($"         [MaxLength({MaxLength}, ErrorMessage = \"Máximo de {MaxLength} caracteres\")]");
             }
 
             if (Field.ToLower().Contains("mail"))
             {
-                //sb.AppendLine("         [EsEmail]");
                 sb.AppendLine("         [EmailAddress]");
             }
 
@@ -92,11 +83,6 @@ namespace generatedtos.Modelo
             {
                 sb.AppendLine("         [DataType(DataType.Password)]");
             }
-
-            //if (Field.ToLower().Contains("ruc"))
-            //{
-            //    sb.AppendLine("         [EsRUC]");
-            //}
 
             if (TipoDato == generatedtos.DataType.Datetime)
             {
