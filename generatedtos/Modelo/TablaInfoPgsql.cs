@@ -38,10 +38,10 @@ namespace generatedtos.Modelo
                         return generatedtos.DataType.Short;
                     case "int8":
                         return generatedtos.DataType.Long;
-                    case "numeric": return generatedtos.DataType.Decimal;                       
+                    case "numeric": return generatedtos.DataType.Decimal;
                     case "bytea":
                         return generatedtos.DataType.ByteArray;
-                    case "bool": 
+                    case "bool":
                         return generatedtos.DataType.Bool;
                     default:
                         return generatedtos.DataType.Unknow;
@@ -66,7 +66,7 @@ namespace generatedtos.Modelo
 
             if (Required && !EsPrimaryKey)
             {
-                sb.AppendLine("         [Required(ErrorMessage = \"Campo requerido\", AllowEmptyStrings = false)]");
+                sb.AppendLine($"         [Required(ErrorMessage = \"Campo {Field} requerido\", AllowEmptyStrings = false)]");
             }
 
             if (TipoDato == generatedtos.DataType.String && MaxLength > 0)
@@ -101,7 +101,7 @@ namespace generatedtos.Modelo
 
             var propertyType = Addons.GetTypeDeclaration(TipoDato);
 
-            if (TipoDato != generatedtos.DataType.String && TipoDato != generatedtos.DataType.ByteArray && !Required && !EsPrimaryKey)
+            if (TipoDato != generatedtos.DataType.ByteArray && !Required && !EsPrimaryKey)
             {
                 propertyType += "?";
             }
