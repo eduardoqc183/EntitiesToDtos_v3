@@ -74,7 +74,7 @@ namespace generatedtos.Modelo
                 sb.AppendLine($"         [MaxLength({MaxLength}, ErrorMessage = \"Máximo de {MaxLength} caracteres\")]");
             }
 
-            if (Field.ToLower().Contains("mail"))
+            if (Field.ToLower().Contains("mail") && TipoDato == generatedtos.DataType.String)
             {
                 sb.AppendLine("         [EmailAddress]");
             }
