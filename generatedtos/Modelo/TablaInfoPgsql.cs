@@ -25,6 +25,7 @@ namespace generatedtos.Modelo
                 switch (DataType)
                 {
                     case "bpchar":
+                    case "text":
                     case "varchar":
                         return generatedtos.DataType.String;
 
